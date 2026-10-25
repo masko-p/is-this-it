@@ -87,7 +87,7 @@
     .order-actions p { flex: 1; color: var(--muted); font-size: .78rem; }
     .req { display: inline-block; border: 1px solid #b7cdb5; border-radius: 4px; padding: 1px 5px; color: var(--green); background: #f5faf1; font-size: .66rem; font-weight: 700; white-space: nowrap; }
     .ac-link { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 32px; text-decoration: none; }
-    a[data-ac-link]:hover, a[data-ac-link][aria-current="true"] { color: var(--green); background: var(--green-soft); }
+    a[data-ac-link]:hover, a[data-ac-link][aria-current="true"], a[data-ac-return]:hover, a[data-ac-return][aria-current="true"] { color: var(--green); background: var(--green-soft); }
     .ac-focus { outline: 3px solid var(--rust); outline-offset: 5px; scroll-margin-block: 80px; }
     .criterion-status { color: var(--green); font-size: .82rem; }
     .criterion-status:not(:empty) { margin-bottom: 18px; }
@@ -178,7 +178,7 @@
           <div class="checkout-grid">
             <div>
               <form id="promo-form" novalidate>
-                <label class="form-label" for="promo-code">Promo code <span class="req">AC1</span></label>
+                <div class="form-label"><label for="promo-code">Promo code</label> <a class="req ac-link" href="#ac1" data-ac-return="AC1" aria-label="Read AC1: code entry">AC1</a></div>
                 <div class="field-row">
                   <input id="promo-code" name="promo-code" value="SUMMER-EMAIL" autocomplete="off" spellcheck="false" aria-describedby="promo-help feedback">
                   <button class="button primary" type="submit">Apply code</button>
@@ -186,13 +186,13 @@
                 <p class="help" id="promo-help">Use the code from your promotional email.</p>
               </form>
               <div class="notice" id="feedback" role="status" aria-live="polite" aria-atomic="true" hidden>
-                <span class="req" id="feedback-req"></span>
+                <span class="reqs" id="feedback-req"></span>
                 <p id="feedback-text"></p>
               </div>
               <p class="review-gap" id="combination-gap" role="status" hidden><strong>Review gap:</strong> Applying a different code while one is active is unspecified. This preview leaves the current discount unchanged. Reset the example to try another code independently.</p>
               <div class="order-actions">
                 <button class="button primary" id="place-order" type="button">Place order</button>
-                <p>You can continue without a promo discount. <span class="req">AC9</span></p>
+                <p>You can continue without a promo discount. <a class="req ac-link" href="#ac9" data-ac-return="AC9" aria-label="Read AC9: recovery">AC9</a></p>
               </div>
             </div>
             <aside class="summary" id="checkout-summary" data-summary="checkout" aria-label="Checkout order summary"></aside>
@@ -202,7 +202,7 @@
         <section class="surface" id="recovery" role="tabpanel" aria-labelledby="recovery-tab" data-surface="recovery" hidden>
           <header class="surface-head">
             <h2 tabindex="-1">Let's get you back to checkout.</h2>
-            <div class="reqs"><span class="req">AC8</span><span class="req">AC9</span></div>
+            <div class="reqs"><a class="req ac-link" href="#ac8" data-ac-return="AC8" aria-label="Read AC8: validation failure">AC8</a><a class="req ac-link" href="#ac9" data-ac-return="AC9" aria-label="Read AC9: recovery">AC9</a></div>
           </header>
           <div class="checkout-grid">
             <div>
@@ -221,7 +221,7 @@
             <span class="success-mark">Order confirmed</span>
             <h2 tabindex="-1">All set.</h2>
             <p id="confirmation-message"></p>
-            <div class="reqs"><span class="req">AC6</span><span class="req">AC9</span></div>
+            <div class="reqs"><a class="req ac-link" href="#ac6" data-ac-return="AC6" aria-label="Read AC6: discount visibility">AC6</a><a class="req ac-link" href="#ac9" data-ac-return="AC9" aria-label="Read AC9: recovery">AC9</a></div>
           </header>
           <aside class="summary" id="confirmation-summary" data-summary="confirmation" aria-label="Final order summary"></aside>
         </section>
@@ -242,18 +242,18 @@
         <section class="review-card">
           <h2>Requirement coverage</h2>
           <table>
-            <caption>Click a criterion to show its local demo and focus the matching element. Scenario links may change the current simulation. Backend guarantees remain unverified.</caption>
-            <thead><tr><th scope="col">Source</th><th scope="col">Where to check</th></tr></thead>
+            <caption>Click a criterion to show its local demo, or a tag in the simulation to read the criterion here. Demo links may change the simulation; links back to the text preserve its state. Backend guarantees remain unverified.</caption>
+            <thead><tr><th scope="col">Source</th><th scope="col">Criterion and where to check</th></tr></thead>
             <tbody>
-              <tr><td><a class="req ac-link" href="#promo-code" data-ac-link="AC1" aria-label="AC1: promo-code entry">AC1</a></td><td>Checkout field and Apply code.</td></tr>
-              <tr><td><a class="req ac-link" href="#checkout-summary" data-ac-link="AC2" aria-label="AC2: valid code updates the total">AC2</a></td><td>Valid code: the summary shows the discount and updated total.</td></tr>
-              <tr><td><a class="req ac-link" href="#feedback" data-ac-link="AC3" aria-label="AC3: expired-code error">AC3</a></td><td>Expired-code error, or <a href="#feedback" data-ac-link="AC3" data-ac-state="invalid" aria-label="AC3: invalid-code error">show the invalid-code error</a>. Totals stay unchanged.</td></tr>
-              <tr><td><a class="req ac-link" href="#feedback" data-ac-link="AC4" aria-label="AC4: ineligible-cart error">AC4</a></td><td>Ineligible-cart error. No discount is applied.</td></tr>
-              <tr><td><a class="req ac-link" href="#feedback" data-ac-link="AC5" aria-label="AC5: already-redeemed error">AC5</a></td><td>Rejection message for a redeemed one-time code.</td></tr>
-              <tr><td><a class="req ac-link" href="#checkout-summary" data-ac-link="AC6" aria-label="AC6: checkout discount summary">AC6</a></td><td>Discount in checkout, or <a href="#confirmation-summary" data-ac-link="AC6" data-ac-state="confirmation" aria-label="AC6: final confirmation discount summary">show the final confirmation</a>.</td></tr>
-              <tr><td><a class="req ac-link" href="#feedback" data-ac-link="AC7" aria-label="AC7: duplicate discount prevention">AC7</a></td><td>Same code applied twice. The message explains why the total remains $98.</td></tr>
-              <tr><td><a class="req ac-link" href="#recovery-message" data-ac-link="AC8" aria-label="AC8: validation-failure recovery">AC8</a></td><td>Service failure opens recovery; destination is an assumption.</td></tr>
-              <tr><td><a class="req ac-link" href="#place-order" data-ac-link="AC9" aria-label="AC9: continue after an error without a discount">AC9</a></td><td>Entered code is retained after an error. Place an order without a discount.</td></tr>
+              <tr id="ac1" tabindex="-1"><td><a class="req ac-link" href="#promo-code" data-ac-link="AC1" aria-label="AC1: promo-code entry">AC1</a></td><td><p>Code entry. Checkout provides a labeled promo-code field and an action to apply it.</p><p class="help">Checkout field and Apply code.</p></td></tr>
+              <tr id="ac2" tabindex="-1"><td><a class="req ac-link" href="#checkout-summary" data-ac-link="AC2" aria-label="AC2: valid code updates the total">AC2</a></td><td><p>Valid code. Applying a valid code to an eligible cart immediately updates the visible discount and total.</p><p class="help">Valid code: the summary shows the discount and updated total.</p></td></tr>
+              <tr id="ac3" tabindex="-1"><td><a class="req ac-link" href="#feedback" data-ac-link="AC3" aria-label="AC3: expired-code error">AC3</a></td><td><p>Expired or invalid code. Reject expired or invalid codes with an informative error. Do not apply a discount, and keep totals accurate.</p><p class="help">Expired-code error, or <a href="#feedback" data-ac-link="AC3" data-ac-state="invalid" aria-label="AC3: invalid-code error">show the invalid-code error</a>. Totals stay unchanged.</p></td></tr>
+              <tr id="ac4" tabindex="-1"><td><a class="req ac-link" href="#feedback" data-ac-link="AC4" aria-label="AC4: ineligible-cart error">AC4</a></td><td><p>Ineligible cart. Do not apply a discount when the cart is ineligible. Explain the outcome to the customer.</p><p class="help">Ineligible-cart error. No discount is applied.</p></td></tr>
+              <tr id="ac5" tabindex="-1"><td><a class="req ac-link" href="#feedback" data-ac-link="AC5" aria-label="AC5: already-redeemed error">AC5</a></td><td><p>One-time use. A redeemed one-time code cannot be reused. Show an informative error when it is rejected.</p><p class="help">Rejection message for a redeemed one-time code.</p></td></tr>
+              <tr id="ac6" tabindex="-1"><td><a class="req ac-link" href="#checkout-summary" data-ac-link="AC6" aria-label="AC6: checkout discount summary">AC6</a></td><td><p>Discount visibility. Show the applied discount in both the checkout summary and the final order confirmation.</p><p class="help">Discount in checkout, or <a href="#confirmation-summary" data-ac-link="AC6" data-ac-state="confirmation" aria-label="AC6: final confirmation discount summary">show the final confirmation</a>.</p></td></tr>
+              <tr id="ac7" tabindex="-1"><td><a class="req ac-link" href="#feedback" data-ac-link="AC7" aria-label="AC7: duplicate discount prevention">AC7</a></td><td><p>Duplicate prevention. Applying the same code again must not apply its discount twice or change the total again.</p><p class="help">Same code applied twice. The message explains why the total remains $98.</p></td></tr>
+              <tr id="ac8" tabindex="-1"><td><a class="req ac-link" href="#recovery-message" data-ac-link="AC8" aria-label="AC8: validation-failure recovery">AC8</a></td><td><p>Validation failure. Redirect appropriately if validation fails, preserving the cart and a path back to checkout.</p><p class="help">Service failure opens recovery; destination is an assumption.</p></td></tr>
+              <tr id="ac9" tabindex="-1"><td><a class="req ac-link" href="#place-order" data-ac-link="AC9" aria-label="AC9: continue after an error without a discount">AC9</a></td><td><p>Recovery. Handle errors gracefully, retain the entered code, and allow the customer to continue checkout without a discount.</p><p class="help">Entered code is retained after an error. Place an order without a discount.</p></td></tr>
               <tr><td><span class="req">AC10</span></td><td>Audit records and retention.<span class="not-verified">Not rendered or verified.</span></td></tr>
               <tr><td><span class="req">AC11</span></td><td>Response time under standard load.<span class="not-verified">Not rendered or verified.</span></td></tr>
             </tbody>
@@ -271,14 +271,14 @@
   </div>
 
   <template id="summary-template">
-    <h3>Order summary <span class="req">AC6</span></h3>
+    <h3>Order summary <a class="req ac-link" href="#ac6" data-ac-return="AC6" aria-label="Read AC6: discount visibility">AC6</a></h3>
     <div class="row"><span>Beach towel</span><span>$44.00</span></div>
     <div class="row"><span>Linen tote</span><span>$28.00</span></div>
     <div class="row"><span>Sun hat</span><span>$36.00</span></div>
     <hr class="rule">
     <div class="row"><span>Subtotal</span><span>$108.00</span></div>
     <div class="row"><span>Shipping</span><span>$8.00</span></div>
-    <div class="row discount-row" data-discount hidden><span>Promo discount<br><span class="code-label" data-applied-code></span></span><span>-$18.00</span></div>
+    <div class="row discount-row" data-discount hidden><span>Promo discount <a class="req ac-link" href="#ac2" data-ac-return="AC2" aria-label="Read AC2: valid code">AC2</a><br><span class="code-label" data-applied-code></span></span><span>-$18.00</span></div>
     <div class="row total"><span>Total</span><span data-total>$116.00</span></div>
     <p class="summary-note">Illustrative cart and $18 discount. See the review notes for assumptions.</p>
   </template>
@@ -323,7 +323,15 @@
       promoInput.setAttribute('aria-invalid', String(state.feedback?.tone === 'error'));
       if (state.feedback) {
         feedback.dataset.tone = state.feedback.tone;
-        document.querySelector('#feedback-req').textContent = state.feedback.requirement;
+        document.querySelector('#feedback-req').replaceChildren(...state.feedback.requirement.split(' / ').map(criterion => {
+          const link = document.createElement('a');
+          link.className = 'req ac-link';
+          link.textContent = criterion;
+          link.dataset.acReturn = criterion;
+          link.href = '#' + criterion.toLowerCase();
+          link.setAttribute('aria-label', 'Read ' + criterion + ': acceptance criterion');
+          return link;
+        }));
         document.querySelector('#feedback-text').textContent = state.feedback.text;
       }
       const code = state.order?.appliedCode;
@@ -456,18 +464,18 @@
       clearTimeout(criterionHighlightTimer);
       highlightedCriterionTarget?.classList.remove('ac-focus');
       highlightedCriterionTarget = null;
-      document.querySelectorAll('a[data-ac-link][aria-current]').forEach(link => link.removeAttribute('aria-current'));
+      document.querySelectorAll('a[data-ac-link][aria-current], a[data-ac-return][aria-current]').forEach(link => link.removeAttribute('aria-current'));
       document.querySelector('#criterion-status').textContent = '';
     }
 
     document.addEventListener('click', event => {
-      const link = event.target.closest('a[data-ac-link]');
+      const link = event.target.closest('a[data-ac-link], a[data-ac-return]');
       if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const href = link.getAttribute('href');
       if (!href?.startsWith('#')) return;
       event.preventDefault();
       clearAcceptanceFocus();
-      revealAcceptanceCriterion(link);
+      if (link.hasAttribute('data-ac-link')) revealAcceptanceCriterion(link);
       const target = document.getElementById(href.slice(1));
       if (!target || !target.getClientRects().length) return;
       if (!target.matches('a[href], button, input, select, textarea, [tabindex]')) target.tabIndex = -1;

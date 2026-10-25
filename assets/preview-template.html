@@ -67,7 +67,7 @@
     .help { color: var(--muted); font-size: .8rem; margin-top: 10px; }
     .req { display: inline-block; border: 1px solid #b7cdb5; border-radius: 4px; padding: 1px 5px; color: var(--green); background: #f5faf1; font-size: .66rem; font-weight: 700; white-space: nowrap; }
     .ac-link { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 32px; text-decoration: none; }
-    a[data-ac-link]:hover, a[data-ac-link][aria-current="true"] { color: var(--green); background: var(--green-soft); }
+    a[data-ac-link]:hover, a[data-ac-link][aria-current="true"], a[data-ac-return]:hover, a[data-ac-return][aria-current="true"] { color: var(--green); background: var(--green-soft); }
     .ac-focus { outline: 3px solid var(--rust); outline-offset: 5px; scroll-margin-block: 80px; }
     .criterion-status { color: var(--green); font-size: .82rem; }
     .criterion-status:not(:empty) { margin-bottom: 18px; }
@@ -132,8 +132,8 @@
         </section>
         <section class="review-card">
           <h2>Requirement coverage</h2>
-          <p>Click a criterion to show its local demo and focus the matching element. Scenario links may change the current simulation.</p>
-          <!-- Map each rendered criterion with <a class="req ac-link" href="#target-id" data-ac-link="AC1" aria-label="AC1: criterion description">AC1</a>. Give each target a stable id. Use separate links for distinct outcomes; keep non-UI criteria unlinked. -->
+          <p>Click a criterion to show its local demo, or a tag in the simulation to read the criterion here. Demo links may change the simulation; links back to the text preserve its state.</p>
+          <!-- Give each criterion a stable container id such as ac1 containing its full source text and demo links: <a class="req ac-link" href="#target-id" data-ac-link="AC1" aria-label="AC1: criterion description">AC1</a>. On the visualization, link each tag back with <a class="req ac-link" href="#ac1" data-ac-return="AC1" aria-label="Read AC1: criterion description">AC1</a>. Place links outside labels and other interactive controls. Use separate demo links for distinct outcomes; keep non-UI criteria unlinked. -->
         </section>
         <section class="review-card">
           <h2>Not verified by this preview</h2>
@@ -154,18 +154,18 @@
       clearTimeout(criterionHighlightTimer);
       highlightedCriterionTarget?.classList.remove('ac-focus');
       highlightedCriterionTarget = null;
-      document.querySelectorAll('a[data-ac-link][aria-current]').forEach(link => link.removeAttribute('aria-current'));
+      document.querySelectorAll('a[data-ac-link][aria-current], a[data-ac-return][aria-current]').forEach(link => link.removeAttribute('aria-current'));
       document.querySelector('#criterion-status').textContent = '';
     }
 
     document.addEventListener('click', event => {
-      const link = event.target.closest('a[data-ac-link]');
+      const link = event.target.closest('a[data-ac-link], a[data-ac-return]');
       if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const href = link.getAttribute('href');
       if (!href?.startsWith('#')) return;
       event.preventDefault();
       clearAcceptanceFocus();
-      revealAcceptanceCriterion(link);
+      if (link.hasAttribute('data-ac-link')) revealAcceptanceCriterion(link);
       const target = document.getElementById(href.slice(1));
       if (!target || !target.getClientRects().length) return;
       if (!target.matches('a[href], button, input, select, textarea, [tabindex]')) target.tabIndex = -1;

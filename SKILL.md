@@ -23,7 +23,7 @@ Render the requirement as written. Do not silently improve it.
 - Keep the template's neutral styling independent of the project's visual language, design system, or graphic design specifications. The simulation is only for specification verification.
 - Create one tab per surface for review navigation when multiple surfaces are required.
 - Simulate explicitly described actions and their resulting state transitions locally without implementing backend services.
-- Add visible requirement tags or labels so reviewers can see what each element maps to.
+- Add visible requirement tags linked back to the full source criterion text in the review panel. Use stable criterion container ids and the template's `data-ac-return` links to scroll, focus, and briefly highlight the text without changing simulation state. Keep links outside labels and other interactive controls.
 - Make rendered acceptance criteria in the review panel clickable: reveal the matching surface or local demo state, scroll to the implementing element, focus it, and briefly highlight it. Use the template's `data-ac-link` navigation and state-reveal hook. Explain when navigation changes the simulated state, provide separate links for distinct outcomes, and leave non-UI criteria marked as unverified without fabricated targets.
 - Include a review panel that lists:
   - rendered requirements and where they appear

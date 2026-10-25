@@ -63,7 +63,7 @@ For requirements without a local source file, it uses `<short-topic>-preview.htm
 - One HTML file with inline styles and scripts. By default, viewing it requires no external assets or installed skill files.
 - Screens and states justified by the requirements, with local simulation of explicitly described actions.
 - Visible labels connecting rendered elements to their requirements.
-- Clickable acceptance criteria that reveal the matching state, move focus to the linked element, and briefly highlight it.
+- Links in both directions: acceptance criteria reveal and highlight the matching element; tags on the visualization focus and highlight the full criterion text without changing the simulation.
 - A review panel showing coverage, assumptions, ambiguities, and non-UI behavior that the preview cannot verify.
 
 ## Preview Template
@@ -78,7 +78,7 @@ See the [promo-code checkout specification](example/checkout.md) and its [intera
 
 Open `example/checkout-preview.html` locally. Select a validation outcome in the review controls, apply a code, and place an order to inspect the confirmation. Apply the same code twice to check duplicate handling, or choose a service failure to try the recovery flow. All actions are simulated locally.
 
-Click an acceptance criterion in the coverage panel to show its local demo state and focus the matching element. AC3 provides separate expired and invalid outcomes; AC6 links to both checkout and confirmation. Scenario links may change the current simulation. Non-UI criteria remain labeled as unverified.
+Click an acceptance criterion in the coverage panel to show its local demo state and focus the matching element. Click a criterion tag on the visualization to read its full text in the coverage panel without changing the simulation. AC3 provides separate expired and invalid outcomes; AC6 links to both checkout and confirmation. Scenario links may change the current simulation. Non-UI criteria remain labeled as unverified.
 
 ## Review
 
