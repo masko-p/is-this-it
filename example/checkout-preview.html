@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout Promo Codes | Is This It?</title>
+  <style>
+    :root {
+      --paper: #f4f0e7;
+      --card: #fffdf8;
+      --ink: #242b25;
+      --muted: #62685f;
+      --line: #d9dccf;
+      --green: #17624d;
+      --green-soft: #e5efe4;
+      --rust: #964623;
+      --rust-soft: #fff0e4;
+      --red: #9b3535;
+      --red-soft: #fbeaea;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: radial-gradient(ellipse at top right, #dfe8d5 0, transparent 45%), var(--paper);
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    button, input, select { font: inherit; }
+    button, a, select { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    button:disabled { cursor: default; opacity: .45; }
+    a { color: var(--green); text-underline-offset: 3px; }
+    :focus-visible { outline: 3px solid #b76b23; outline-offset: 4px; }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2 { font-family: "Baskerville", "Palatino Linotype", Georgia, serif; font-weight: 500; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4rem); letter-spacing: -.035em; line-height: 1.1; }
+    h2 { font-size: 1.85rem; line-height: 1.2; }
+    h3 { font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; }
+    .page { max-width: 1440px; margin: auto; padding: 36px; }
+    .masthead { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+    .eyebrow { color: var(--green); font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
+    .tagline { margin-top: 12px; color: var(--muted); }
+    .source { white-space: nowrap; font-size: .9rem; }
+    .banner { border-left: 4px solid var(--green); padding: 12px 18px; background: #ffffff85; margin-bottom: 24px; font-size: .9rem; }
+    .banner strong { display: block; margin-bottom: 2px; }
+    .banner p, .muted { color: var(--muted); }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 350px; align-items: start; gap: 24px; }
+    .workspace, .review-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+    .workspace { box-shadow: 0 18px 50px #3441320b; animation: arrive .35s ease-out both; }
+    .review-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; padding: 20px 24px; background: var(--green-soft); }
+    .review-controls > div { flex: 1; min-width: 200px; }
+    .control-label { display: block; margin-bottom: 6px; color: var(--green); font-weight: 700; font-size: .78rem; }
+    select, input { width: 100%; min-height: 46px; border: 1px solid #a9b5a5; border-radius: 8px; padding: 10px 12px; background: #fff; color: var(--ink); }
+    .review-help { flex-basis: 100%; color: #4c624f; font-size: .78rem; }
+    .tabs { display: flex; gap: 8px; padding: 16px 24px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+    .tab { white-space: nowrap; border: 0; border-radius: 6px; padding: 8px 12px; background: transparent; color: var(--muted); }
+    .tab[aria-selected="true"] { color: var(--green); background: var(--green-soft); font-weight: 700; }
+    .surface { padding: 28px 24px; }
+    .surface-head { margin-bottom: 26px; }
+    .surface-head p { color: var(--muted); margin-top: 8px; font-size: .9rem; }
+    .checkout-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; gap: 24px; }
+    .form-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: .9rem; font-weight: 600; margin-bottom: 10px; }
+    .field-row { display: flex; align-items: start; gap: 8px; }
+    .field-row input { min-width: 0; flex: 1; }
+    input[aria-invalid="true"] { border-color: var(--red); }
+    .button { min-height: 46px; border: 1px solid transparent; border-radius: 8px; padding: 10px 14px; font-weight: 600; white-space: nowrap; }
+    .primary { background: var(--green); color: #fff; }
+    .secondary { background: transparent; border-color: #9bad98; color: var(--green); }
+    .button:hover:not(:disabled) { filter: brightness(.95); }
+    .help { color: var(--muted); font-size: .8rem; margin-top: 10px; }
+    .notice { border-radius: 8px; margin-top: 18px; padding: 14px; font-size: .88rem; }
+    .notice[data-tone="success"], .notice[data-tone="info"] { background: var(--green-soft); color: var(--green); }
+    .notice[data-tone="error"] { background: var(--red-soft); color: var(--red); }
+    .notice .req { margin-bottom: 6px; }
+    .summary { border: 1px solid var(--line); background: #f8f8f1; border-radius: 12px; padding: 18px; }
+    .summary h3 { margin-bottom: 18px; }
+    .row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 10px; font-size: .88rem; }
+    .row > :last-child { white-space: nowrap; }
+    .rule { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
+    .discount-row { color: var(--green); font-weight: 600; }
+    .code-label { font-size: .7rem; overflow-wrap: anywhere; }
+    .total { font-size: 1.05rem; font-weight: 700; }
+    .summary-note { margin-top: 14px; color: var(--muted); font-size: .74rem; }
+    .order-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .order-actions p { flex: 1; color: var(--muted); font-size: .78rem; }
+    .req { display: inline-block; border: 1px solid #b7cdb5; border-radius: 4px; padding: 1px 5px; color: var(--green); background: #f5faf1; font-size: .66rem; font-weight: 700; white-space: nowrap; }
+    .ac-link { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 32px; text-decoration: none; }
+    a[data-ac-link]:hover, a[data-ac-link][aria-current="true"] { color: var(--green); background: var(--green-soft); }
+    .ac-focus { outline: 3px solid var(--rust); outline-offset: 5px; scroll-margin-block: 80px; }
+    .criterion-status { color: var(--green); font-size: .82rem; }
+    .criterion-status:not(:empty) { margin-bottom: 18px; }
+    .reqs { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+    .review-card { padding: 22px; margin-bottom: 18px; }
+    .review-card h2 { font-size: 1.45rem; margin-bottom: 14px; }
+    .review-card p, .review-card li { font-size: .8rem; color: var(--muted); }
+    .review-card ul { margin: 0; padding-left: 18px; }
+    .review-card li + li { margin-top: 10px; }
+    .review-card strong { color: var(--ink); }
+    .open-questions { border-top: 3px solid var(--rust); }
+    .review-card .eyebrow { color: var(--rust); }
+    table { width: 100%; border-collapse: collapse; font-size: .75rem; }
+    caption { text-align: left; color: var(--muted); margin-bottom: 12px; }
+    th, td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); padding: 9px 0; }
+    th { font-weight: 500; color: var(--muted); }
+    th:first-child, td:first-child { padding-right: 10px; white-space: nowrap; }
+    .not-verified { display: block; color: var(--rust); margin-top: 3px; }
+    .review-gap { border: 1px dashed var(--rust); background: var(--rust-soft); border-radius: 8px; padding: 12px; margin-top: 16px; color: var(--rust); font-size: .85rem; }
+    .recovery-message { margin-bottom: 18px; padding: 16px; background: var(--rust-soft); border-radius: 8px; }
+    .recovery-message p { font-size: .9rem; }
+    .success-mark { display: inline-block; padding: 6px 10px; border-radius: 5px; color: var(--green); background: var(--green-soft); font-size: .8rem; margin-bottom: 14px; }
+    .footer { margin-top: 24px; color: var(--muted); font-size: .78rem; }
+    @keyframes arrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 1120px) { .checkout-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 920px) { .layout { grid-template-columns: 1fr; } .checkout-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+    @media (max-width: 600px) {
+      .page { padding: 20px 14px; }
+      .masthead { display: block; }
+      .source { display: inline-block; margin-top: 18px; }
+      .checkout-grid { grid-template-columns: 1fr; }
+      .review-controls, .surface { padding: 20px 16px; }
+      .tabs { padding: 12px 10px; }
+      .field-row { flex-direction: column; }
+      .field-row input, .field-row button { width: 100%; }
+      .order-actions { align-items: start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { .workspace { animation: none; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">Is This It?</p>
+        <h1>Checkout Promo Codes</h1>
+        <p class="tagline">What you spec is what you get.</p>
+      </div>
+      <a class="source" href="checkout.md">Read the source: checkout.md</a>
+    </header>
+
+    <div class="banner">
+      <strong>Local simulation for specification verification only.</strong>
+      <p>This skill does not account for the project's visual language, design system, or graphic design specifications. Use this preview only to verify the specification's intent, not as a design proposal. Backend behavior is not verified, and no backend operations are performed.</p>
+    </div>
+
+    <p class="criterion-status" id="criterion-status" role="status" aria-live="polite"></p>
+
+    <main class="layout">
+      <div class="workspace">
+        <section class="review-controls" aria-label="Review controls">
+          <div>
+            <label class="control-label" for="outcome">Review controls / Simulated validation outcome</label>
+            <select id="outcome">
+              <option value="valid">Valid code, eligible cart</option>
+              <option value="expired">Expired code</option>
+              <option value="invalid">Invalid code</option>
+              <option value="ineligible">Ineligible cart</option>
+              <option value="redeemed">One-time code already redeemed</option>
+              <option value="unavailable">Validation service unavailable</option>
+            </select>
+          </div>
+          <button class="button secondary" id="reset" type="button">Reset example</button>
+          <p class="review-help">Select an outcome, then apply a code below. Outcomes do not depend on the code text. Changing the outcome starts a fresh checkout.</p>
+        </section>
+
+        <nav class="tabs" role="tablist" aria-label="Review surfaces">
+          <button class="tab" id="checkout-tab" role="tab" aria-selected="true" aria-controls="checkout" data-tab="checkout" tabindex="0">Checkout</button>
+          <button class="tab" id="recovery-tab" role="tab" aria-selected="false" aria-controls="recovery" data-tab="recovery" tabindex="-1" disabled>Recovery</button>
+          <button class="tab" id="confirmation-tab" role="tab" aria-selected="false" aria-controls="confirmation" data-tab="confirmation" tabindex="-1" disabled>Confirmation</button>
+        </nav>
+
+        <section class="surface" id="checkout" role="tabpanel" aria-labelledby="checkout-tab" data-surface="checkout">
+          <header class="surface-head">
+            <h2 tabindex="-1">Your checkout</h2>
+            <p>Apply a promo code before placing your order.</p>
+          </header>
+          <div class="checkout-grid">
+            <div>
+              <form id="promo-form" novalidate>
+                <label class="form-label" for="promo-code">Promo code <span class="req">AC1</span></label>
+                <div class="field-row">
+                  <input id="promo-code" name="promo-code" value="SUMMER-EMAIL" autocomplete="off" spellcheck="false" aria-describedby="promo-help feedback">
+                  <button class="button primary" type="submit">Apply code</button>
+                </div>
+                <p class="help" id="promo-help">Use the code from your promotional email.</p>
+              </form>
+              <div class="notice" id="feedback" role="status" aria-live="polite" aria-atomic="true" hidden>
+                <span class="req" id="feedback-req"></span>
+                <p id="feedback-text"></p>
+              </div>
+              <p class="review-gap" id="combination-gap" role="status" hidden><strong>Review gap:</strong> Applying a different code while one is active is unspecified. This preview leaves the current discount unchanged. Reset the example to try another code independently.</p>
+              <div class="order-actions">
+                <button class="button primary" id="place-order" type="button">Place order</button>
+                <p>You can continue without a promo discount. <span class="req">AC9</span></p>
+              </div>
+            </div>
+            <aside class="summary" id="checkout-summary" data-summary="checkout" aria-label="Checkout order summary"></aside>
+          </div>
+        </section>
+
+        <section class="surface" id="recovery" role="tabpanel" aria-labelledby="recovery-tab" data-surface="recovery" hidden>
+          <header class="surface-head">
+            <h2 tabindex="-1">Let's get you back to checkout.</h2>
+            <div class="reqs"><span class="req">AC8</span><span class="req">AC9</span></div>
+          </header>
+          <div class="checkout-grid">
+            <div>
+              <div class="recovery-message" id="recovery-message">
+                <p>We could not validate your promo code right now. Your cart and entered code are still here. Return to checkout to try again or place your order without a discount.</p>
+              </div>
+              <button class="button primary" id="return-to-checkout" type="button">Return to checkout</button>
+              <p class="review-gap"><strong>AC8 assumption:</strong> A service failure leads to this recovery surface; rejected codes stay in checkout. The source does not define the failure types or redirect destination.</p>
+            </div>
+            <aside class="summary" data-summary="recovery" aria-label="Preserved cart summary"></aside>
+          </div>
+        </section>
+
+        <section class="surface" id="confirmation" role="tabpanel" aria-labelledby="confirmation-tab" data-surface="confirmation" hidden>
+          <header class="surface-head">
+            <span class="success-mark">Order confirmed</span>
+            <h2 tabindex="-1">All set.</h2>
+            <p id="confirmation-message"></p>
+            <div class="reqs"><span class="req">AC6</span><span class="req">AC9</span></div>
+          </header>
+          <aside class="summary" id="confirmation-summary" data-summary="confirmation" aria-label="Final order summary"></aside>
+        </section>
+      </div>
+
+      <aside aria-label="Requirements and review notes">
+        <section class="review-card open-questions">
+          <p class="eyebrow">Worth a conversation</p>
+          <h2>What the spec leaves open</h2>
+          <ul>
+            <li><strong>Discount and eligibility.</strong> The $18 discount is illustrative. Product prices, USD, and shipping are fixtures, not promotion rules.</li>
+            <li><strong>Failure routing.</strong> This preview sends service failures to recovery and keeps rejected codes in checkout. AC8 needs clarification.</li>
+            <li><strong>Multiple codes.</strong> Reapplying the same code is safe. Combining or replacing different codes is not simulated because the behavior is undefined.</li>
+            <li><strong>UI details.</strong> Layout, copy, and the empty-field message are illustrative. Checkout is reduced to the promo-code flow.</li>
+          </ul>
+        </section>
+
+        <section class="review-card">
+          <h2>Requirement coverage</h2>
+          <table>
+            <caption>Click a criterion to show its local demo and focus the matching element. Scenario links may change the current simulation. Backend guarantees remain unverified.</caption>
+            <thead><tr><th scope="col">Source</th><th scope="col">Where to check</th></tr></thead>
+            <tbody>
+              <tr><td><a class="req ac-link" href="#promo-code" data-ac-link="AC1" aria-label="AC1: promo-code entry">AC1</a></td><td>Checkout field and Apply code.</td></tr>
+              <tr><td><a class="req ac-link" href="#checkout-summary" data-ac-link="AC2" aria-label="AC2: valid code updates the total">AC2</a></td><td>Valid code: the summary shows the discount and updated total.</td></tr>
+              <tr><td><a class="req ac-link" href="#feedback" data-ac-link="AC3" aria-label="AC3: expired-code error">AC3</a></td><td>Expired-code error, or <a href="#feedback" data-ac-link="AC3" data-ac-state="invalid" aria-label="AC3: invalid-code error">show the invalid-code error</a>. Totals stay unchanged.</td></tr>
+              <tr><td><a class="req ac-link" href="#feedback" data-ac-link="AC4" aria-label="AC4: ineligible-cart error">AC4</a></td><td>Ineligible-cart error. No discount is applied.</td></tr>
+              <tr><td><a class="req ac-link" href="#feedback" data-ac-link="AC5" aria-label="AC5: already-redeemed error">AC5</a></td><td>Rejection message for a redeemed one-time code.</td></tr>
+              <tr><td><a class="req ac-link" href="#checkout-summary" data-ac-link="AC6" aria-label="AC6: checkout discount summary">AC6</a></td><td>Discount in checkout, or <a href="#confirmation-summary" data-ac-link="AC6" data-ac-state="confirmation" aria-label="AC6: final confirmation discount summary">show the final confirmation</a>.</td></tr>
+              <tr><td><a class="req ac-link" href="#feedback" data-ac-link="AC7" aria-label="AC7: duplicate discount prevention">AC7</a></td><td>Same code applied twice. The message explains why the total remains $98.</td></tr>
+              <tr><td><a class="req ac-link" href="#recovery-message" data-ac-link="AC8" aria-label="AC8: validation-failure recovery">AC8</a></td><td>Service failure opens recovery; destination is an assumption.</td></tr>
+              <tr><td><a class="req ac-link" href="#place-order" data-ac-link="AC9" aria-label="AC9: continue after an error without a discount">AC9</a></td><td>Entered code is retained after an error. Place an order without a discount.</td></tr>
+              <tr><td><span class="req">AC10</span></td><td>Audit records and retention.<span class="not-verified">Not rendered or verified.</span></td></tr>
+              <tr><td><span class="req">AC11</span></td><td>Response time under standard load.<span class="not-verified">Not rendered or verified.</span></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="review-card">
+          <h2>Beyond this preview</h2>
+          <p><strong>AC2-AC5, AC7:</strong> Validation, eligibility, one-time redemption, and duplicate prevention across requests are backend guarantees. Their visible outcomes are shown here; enforcement is not verified.</p>
+          <p class="help"><strong>AC10-AC11:</strong> Audit contents, retention, load, and response-time targets still need definition. No audit store, payment service, or performance test is implemented.</p>
+        </section>
+      </aside>
+    </main>
+    <footer class="footer">Source: <a href="checkout.md">checkout.md</a> / One file, local interactions, visible assumptions.</footer>
+  </div>
+
+  <template id="summary-template">
+    <h3>Order summary <span class="req">AC6</span></h3>
+    <div class="row"><span>Beach towel</span><span>$44.00</span></div>
+    <div class="row"><span>Linen tote</span><span>$28.00</span></div>
+    <div class="row"><span>Sun hat</span><span>$36.00</span></div>
+    <hr class="rule">
+    <div class="row"><span>Subtotal</span><span>$108.00</span></div>
+    <div class="row"><span>Shipping</span><span>$8.00</span></div>
+    <div class="row discount-row" data-discount hidden><span>Promo discount<br><span class="code-label" data-applied-code></span></span><span>-$18.00</span></div>
+    <div class="row total"><span>Total</span><span data-total>$116.00</span></div>
+    <p class="summary-note">Illustrative cart and $18 discount. See the review notes for assumptions.</p>
+  </template>
+
+  <script>
+    const fixture = document.querySelector('#outcome');
+    const promoInput = document.querySelector('#promo-code');
+    const feedback = document.querySelector('#feedback');
+    const combinationGap = document.querySelector('#combination-gap');
+    const state = {
+      outcome: 'valid',
+      view: 'checkout',
+      appliedCode: null,
+      feedback: null,
+      recoveryVisited: false,
+      order: null
+    };
+
+    for (const summary of document.querySelectorAll('[data-summary]')) {
+      summary.append(document.querySelector('#summary-template').content.cloneNode(true));
+    }
+
+    function render() {
+      document.querySelector('#recovery-tab').disabled = !state.recoveryVisited;
+      document.querySelector('#confirmation-tab').disabled = !state.order;
+      for (const tab of document.querySelectorAll('[data-tab]')) {
+        const active = tab.dataset.tab === state.view;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+      }
+      for (const surface of document.querySelectorAll('[data-surface]')) {
+        surface.hidden = surface.dataset.surface !== state.view;
+      }
+      for (const summary of document.querySelectorAll('[data-summary]')) {
+        const appliedCode = summary.dataset.summary === 'confirmation'
+          ? state.order?.appliedCode : state.appliedCode;
+        summary.querySelector('[data-discount]').hidden = !appliedCode;
+        summary.querySelector('[data-applied-code]').textContent = appliedCode || '';
+        summary.querySelector('[data-total]').textContent = appliedCode ? '$98.00' : '$116.00';
+      }
+      feedback.hidden = !state.feedback;
+      promoInput.setAttribute('aria-invalid', String(state.feedback?.tone === 'error'));
+      if (state.feedback) {
+        feedback.dataset.tone = state.feedback.tone;
+        document.querySelector('#feedback-req').textContent = state.feedback.requirement;
+        document.querySelector('#feedback-text').textContent = state.feedback.text;
+      }
+      const code = state.order?.appliedCode;
+      document.querySelector('#confirmation-message').textContent = code
+        ? `Promo code ${code} was applied. Your final total includes the discount.`
+        : 'Your order has no promo discount. The final total is unchanged.';
+    }
+
+    function navigate(view, moveFocus = false) {
+      clearAcceptanceFocus();
+      state.view = view;
+      render();
+      if (moveFocus) document.querySelector(`[data-surface="${view}"] h2`).focus();
+    }
+
+    function resetPreview(outcome = 'valid') {
+      clearAcceptanceFocus();
+      Object.assign(state, {
+        outcome, view: 'checkout', appliedCode: null, feedback: null,
+        recoveryVisited: false, order: null
+      });
+      fixture.value = outcome;
+      promoInput.value = 'SUMMER-EMAIL';
+      combinationGap.hidden = true;
+      render();
+    }
+
+    const rejections = {
+      expired: { requirement: 'AC3 / AC9', text: 'This promo code has expired. Check your email for another code or continue without a discount.' },
+      invalid: { requirement: 'AC3 / AC9', text: 'This promo code is not valid. Check the code and try again, or continue without a discount.' },
+      ineligible: { requirement: 'AC4 / AC9', text: 'This cart is not eligible for the promo code. You can continue without a discount.' },
+      redeemed: { requirement: 'AC5 / AC9', text: 'This one-time promo code has already been redeemed. You can continue without a discount.' }
+    };
+
+    function applyPromoCode(moveFocus = true) {
+      clearAcceptanceFocus();
+      const code = promoInput.value.trim();
+      combinationGap.hidden = true;
+      if (!code) {
+        state.feedback = { tone: 'error', requirement: 'AC1', text: 'Enter a promo code before applying it.' };
+      } else if (state.appliedCode) {
+        if (code === state.appliedCode) {
+          state.feedback = { tone: 'info', requirement: 'AC7', text: 'This code is already applied. The discount has not been added again.' };
+        } else {
+          state.feedback = null;
+          combinationGap.hidden = false;
+        }
+      } else if (state.outcome === 'unavailable') {
+        state.feedback = null;
+        state.recoveryVisited = true;
+        navigate('recovery', moveFocus);
+        return;
+      } else if (state.outcome === 'valid') {
+        state.appliedCode = code;
+        state.feedback = { tone: 'success', requirement: 'AC2 / AC6', text: 'Promo code applied. Your discount and total have been updated.' };
+      } else {
+        state.feedback = { tone: 'error', ...rejections[state.outcome] };
+      }
+      render();
+    }
+
+    function placeOrder(moveFocus = true) {
+      state.order = { appliedCode: state.appliedCode };
+      navigate('confirmation', moveFocus);
+    }
+
+    document.querySelector('#promo-form').addEventListener('submit', event => {
+      event.preventDefault();
+      applyPromoCode();
+    });
+
+    promoInput.addEventListener('input', () => {
+      clearAcceptanceFocus();
+      state.feedback = null;
+      combinationGap.hidden = true;
+      render();
+    });
+    fixture.addEventListener('change', () => resetPreview(fixture.value));
+    document.querySelector('#reset').addEventListener('click', () => resetPreview());
+    document.querySelector('#place-order').addEventListener('click', () => placeOrder());
+    document.querySelector('#return-to-checkout').addEventListener('click', () => {
+      state.feedback = null;
+      navigate('checkout', true);
+    });
+    document.querySelector('.tabs').addEventListener('click', event => {
+      const tab = event.target.closest('[data-tab]');
+      if (tab && !tab.disabled) {
+        navigate(tab.dataset.tab);
+      }
+    });
+    document.querySelector('.tabs').addEventListener('keydown', event => {
+      const tabs = [...document.querySelectorAll('[data-tab]:not(:disabled)')];
+      const index = tabs.indexOf(document.activeElement);
+      if (index < 0) return;
+      let next;
+      if (event.key === 'ArrowRight') next = tabs[(index + 1) % tabs.length];
+      if (event.key === 'ArrowLeft') next = tabs[(index - 1 + tabs.length) % tabs.length];
+      if (event.key === 'Home') next = tabs[0];
+      if (event.key === 'End') next = tabs[tabs.length - 1];
+      if (!next) return;
+      event.preventDefault();
+      navigate(next.dataset.tab);
+      next.focus();
+    });
+
+    function revealAcceptanceCriterion(link) {
+      const criterion = link.dataset.acLink;
+      if (criterion === 'AC1') {
+        navigate('checkout');
+        return;
+      }
+      const scenarios = {
+        AC2: 'valid', AC3: 'expired', AC4: 'ineligible', AC5: 'redeemed',
+        AC6: 'valid', AC7: 'valid', AC8: 'unavailable', AC9: 'expired'
+      };
+      const outcome = link.dataset.acState === 'invalid' ? 'invalid' : scenarios[criterion];
+      if (!outcome) return;
+      const enteredCode = promoInput.value;
+      resetPreview(outcome);
+      if (enteredCode.trim()) promoInput.value = enteredCode;
+      applyPromoCode(false);
+      if (criterion === 'AC7') applyPromoCode(false);
+      if (link.dataset.acState === 'confirmation') placeOrder(false);
+    }
+
+    let highlightedCriterionTarget;
+    let criterionHighlightTimer;
+
+    function clearAcceptanceFocus() {
+      clearTimeout(criterionHighlightTimer);
+      highlightedCriterionTarget?.classList.remove('ac-focus');
+      highlightedCriterionTarget = null;
+      document.querySelectorAll('a[data-ac-link][aria-current]').forEach(link => link.removeAttribute('aria-current'));
+      document.querySelector('#criterion-status').textContent = '';
+    }
+
+    document.addEventListener('click', event => {
+      const link = event.target.closest('a[data-ac-link]');
+      if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const href = link.getAttribute('href');
+      if (!href?.startsWith('#')) return;
+      event.preventDefault();
+      clearAcceptanceFocus();
+      revealAcceptanceCriterion(link);
+      const target = document.getElementById(href.slice(1));
+      if (!target || !target.getClientRects().length) return;
+      if (!target.matches('a[href], button, input, select, textarea, [tabindex]')) target.tabIndex = -1;
+      target.focus({ preventScroll: true });
+      target.classList.add('ac-focus');
+      target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+      highlightedCriterionTarget = target;
+      link.setAttribute('aria-current', 'true');
+      document.querySelector('#criterion-status').textContent = `Review focus: ${link.getAttribute('aria-label') || link.textContent.trim()}`;
+      criterionHighlightTimer = setTimeout(() => target.classList.remove('ac-focus'), 2400);
+    });
+
+    render();
+  </script>
+</body>
+</html>
